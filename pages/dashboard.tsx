@@ -21,6 +21,7 @@ import { Overview } from "../src/components/ui/overview"
 import { RecentSales } from "../src/components/ui/recent-sales"
 import { Search } from "../src/components/ui/search"
 import { UserNav } from "../src/components/ui/user-nav"
+import { SavedInterest } from "@/src/components/ui/saved_interests"
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -181,24 +182,24 @@ export default function Dashboard() {
                   </CardContent>
                 </Card>
               </div>
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-                <Card className="col-span-4">
+              <div className="grid gap-4 md:grid-cols-24 lg:grid-cols-24">
+                {/*<Card className="col-span-4">
                   <CardHeader>
                     <CardTitle>Overview</CardTitle>
                   </CardHeader>
                   <CardContent className="pl-2">
                     <Overview />
                   </CardContent>
-                </Card>
+  </Card>*/}
                 <Card className="col-span-3">
                   <CardHeader>
-                    <CardTitle>Recent Sales</CardTitle>
+                    <CardTitle>Saved interests</CardTitle>
                     <CardDescription>
-                      You made 265 sales this month.
+                      This is a recap of your saved interests.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <RecentSales />
+                    <SavedInterest />
                   </CardContent>
                 </Card>
               </div>

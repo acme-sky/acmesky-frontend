@@ -43,6 +43,7 @@ export function SignupFormDemo() {
 
       // Store the token in localStorage
       localStorage.setItem("token", data.token);
+      localStorage.setItem("user_id", data.user_id)
       router.push('/dashboard')
     } catch (error) {
       console.error("Error:", error);
