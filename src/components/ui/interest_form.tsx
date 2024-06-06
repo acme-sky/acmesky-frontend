@@ -15,50 +15,56 @@ import {
   FormMessage,
 } from "./form"
 import { Input } from "./input"
-import { Calendar } from "./calendar"
+import { Calendar, DateRange } from "./calendar"
 import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-  } from "./popover"
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "./popover"
 import { cn } from "../../lib/utils"
 import { addDays, format } from "date-fns"
 
+// Update the schema to handle date_range as an object with from and to dates
 const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
+  flight1: z.string().min(3),
+  flight2: z.string().min(3),
+  date_range: z.object({
+    from: z.date(),
+    to: z.date()
+  })
 })
 
 export function InterestForm() {
-    // 1. Define your form.
+  // Define your form.
+  const [date, setDate] = useState<DateRange | undefined>({
+    from: new Date(2024, 0, 20),
+    to: addDays(new Date(2024, 0, 20), 20),
+  })
 
-    const [date, setDate] = useState<DateRange | undefined>({
-        from: new Date(2022, 0, 20),
-        to: addDays(new Date(2022, 0, 20), 20),
-      })
-
-    
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-          username: "",
-        },
-    })
-     
-      // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      flight1: "",
+      flight2: "",
+      date_range: {
+        from: new Date(2024, 0, 20),
+        to: addDays(new Date(2024, 0, 20), 20),
+      }
     }
+  })
+
+  // Define a submit handler.
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // Log the form values.
+    console.log(values)
+  }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="username"
+          name="flight1"
           render={({ field }) => (
             <FormItem>
               <FormLabel>From</FormLabel>
@@ -71,7 +77,7 @@ export function InterestForm() {
         />
         <FormField
           control={form.control}
-          name="username"
+          name="flight2"
           render={({ field }) => (
             <FormItem>
               <FormLabel>To</FormLabel>
@@ -81,53 +87,56 @@ export function InterestForm() {
               <FormMessage />
             </FormItem>
           )}
-        /> 
+        />
         <FormField
-        control={form.control}
-        name="dob"
-        render={({ field }) => (
-          <FormItem className="flex flex-col">
-            <FormLabel>Pick Days</FormLabel>
-            <Popover>
+          control={form.control}
+          name="date_range"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Pick Days</FormLabel>
+              <Popover>
                 <PopoverTrigger asChild>
-                <Button
+                  <Button
                     id="date"
                     variant={"outline"}
                     className={cn(
-                    "w-[300px] justify-start text-left font-normal",
-                    !date && "text-muted-foreground"
+                      "w-[300px] justify-start text-left font-normal",
+                      !date && "text-muted-foreground"
                     )}
-                >
+                  >
                     <CalendarIcon className="mr-2 h-4 w-4" />
                     {date?.from ? (
-                    date.to ? (
+                      date.to ? (
                         <>
-                        {format(date.from, "LLL dd, y")} -{" "}
-                        {format(date.to, "LLL dd, y")}
+                          {format(date.from, "LLL dd, y")} -{" "}
+                          {format(date.to, "LLL dd, y")}
                         </>
-                    ) : (
+                      ) : (
                         format(date.from, "LLL dd, y")
-                    )
+                      )
                     ) : (
-                    <span>Pick a date</span>
+                      <span>Pick a date</span>
                     )}
-                </Button>
+                  </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
+                  <Calendar
                     initialFocus
                     mode="range"
                     defaultMonth={date?.from}
                     selected={date}
-                    onSelect={setDate}
+                    onSelect={(range) => {
+                      setDate(range)
+                      field.onChange(range)
+                    }}
                     numberOfMonths={2}
-                />
+                  />
                 </PopoverContent>
-            </Popover>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+              </Popover>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <Button type="submit">Submit</Button>
       </form>
     </Form>
