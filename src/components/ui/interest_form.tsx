@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -23,6 +23,7 @@ import {
 } from "./popover"
 import { cn } from "../../lib/utils"
 import { addDays, format } from "date-fns"
+import axios from "axios"
 
 // Update the schema to handle date_range as an object with from and to dates
 const formSchema = z.object({
@@ -41,6 +42,16 @@ export function InterestForm() {
     to: addDays(new Date(2024, 0, 20), 20),
   })
 
+  const [token, setToken] = useState<string| null>("");
+
+  useEffect(() => {
+    /*const storedUserId: string | null = localStorage.getItem("user_id");
+    setUser_id(storedUserId);*/
+
+        const storedToken: string | null = localStorage.getItem("token");
+        setToken(storedToken);
+    }, []);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -54,9 +65,29 @@ export function InterestForm() {
   })
 
   // Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Log the form values.
-    console.log(values)
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const payload = {
+        flight1_departure_airport: values.flight1,
+        flight1_departure_time: values.date_range.from.toISOString(),
+        flight1_arrival_airport: values.flight2,
+        flight1_arrival_time: values.date_range.from.toISOString(),
+        flight2_departure_airport: values.flight2,
+        flight2_departure_time: values.date_range.to.toISOString(),
+        flight2_arrival_airport: values.flight1,
+        flight2_arrival_time: values.date_range.to.toISOString(),
+      };
+
+      console.log(payload)
+
+      const response = await axios.post('http://localhost:8080/v1/interests/', payload, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      console.log('Form submitted successfully', response.data);
+    } catch (error) {
+      console.error('Error submitting form', error);
+    }
   }
 
   return (
