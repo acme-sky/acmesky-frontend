@@ -23,3 +23,26 @@ export interface Interest {
     flight2_arrival_airport: string | null;
     user: User;
 };
+
+
+export interface Flight_info {
+    id: number;
+    arrival_airport: string;
+    arrival_time: string;
+    departure_airport: string;
+    departure_time: string;
+    cost: number;
+    airline: string;
+    token: string;
+};
+
+export interface Journey_info {
+    id : number;
+    flight1_id: number;
+    flight1: Flight_info;
+    flight2_id: number;
+    flight2: Flight_info;
+    cost: number;
+    user_id: number
+}
+

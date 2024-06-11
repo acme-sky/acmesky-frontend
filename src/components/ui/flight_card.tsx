@@ -9,17 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "./card";
-
-type Flight_info = {
-  id: string;
-  arrival_airport: string;
-  arrival_time: string;
-  departure_airport: string;
-  departure_time: string;
-  cost: number;
-  airline: string;
-  token: string;
-};
+import { Flight_info } from "@/types";
 
 type FlightCardProps = {
   info: Flight_info;

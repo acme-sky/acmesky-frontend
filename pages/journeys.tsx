@@ -14,10 +14,11 @@ import {
 } from "../src/components/ui/tabs";
 import { MainNav } from "../src/components/ui/main-nav";
 import { FlightCard } from "@/src/components/ui/flight_card";
+import { JourneyCard } from "@/src/components/ui/journey_card";
 
 
 const flightInfo = {
-    id: "1",
+    id: 1,
     arrival_airport: "JFK",
     arrival_time: "18:30",
     departure_airport: "LAX",
@@ -25,6 +26,34 @@ const flightInfo = {
     cost: 300,
     airline: "Delta",
     token: "ABC123",
+  };
+
+const exampleJourney: Journey_info = {
+    id: 1,
+    flight1_id: 101,
+    flight1: {
+      id: 101,
+      arrival_airport: "JFK",
+      arrival_time: "18:30",
+      departure_airport: "LAX",
+      departure_time: "15:00",
+      cost: 150,
+      airline: "Delta",
+      token: "ABC123",
+    },
+    flight2_id: 102,
+    flight2: {
+      id: 102,
+      arrival_airport: "BOS",
+      arrival_time: "22:00",
+      departure_airport: "JFK",
+      departure_time: "19:30",
+      cost: 120,
+      airline: "American Airlines",
+      token: "DEF456",
+    },
+    cost: 270,
+    user_id: 1,
   };
 
 
@@ -40,6 +69,7 @@ export default function newInterest() {
         </h2>
         <div className="space-y-4 flex justify-center">
             <FlightCard info={flightInfo}/>
+            <JourneyCard info={exampleJourney}/>
         </div>
       </div>
     </div>
