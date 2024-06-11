@@ -51,11 +51,11 @@ export function FlightCard({
           </div>
         </div>
       </CardContent>
-      <CardFooter>
+      {/*<CardFooter>
         <Button className="w-full">
           <CheckIcon className="mr-2 h-4 w-4" /> Confirm Booking
         </Button>
-      </CardFooter>
+      </CardFooter>*/}
     </Card>
   );
 }

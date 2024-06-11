@@ -1,15 +1,24 @@
-import {  CheckIcon, EyeOpenIcon } from "@radix-ui/react-icons";
+import { useState } from "react";
+import { CheckIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 import { cn } from "../../lib/utils";
 import { Button } from "./button";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
+  CardFooter,
 } from "./card";
 import { Journey_info } from "@/types";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from "./dialog";
 
 type JourneyCardProps = {
   info: Journey_info;
@@ -20,6 +29,11 @@ export function JourneyCard({
   className,
   ...props
 }: JourneyCardProps) {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const openDialog = () => setIsDialogOpen(true);
+  const closeDialog = () => setIsDialogOpen(false);
+
   return (
     <Card className={cn("w-[380px]", className)} {...props}>
       <CardHeader>
@@ -50,13 +64,44 @@ export function JourneyCard({
         </div>
       </CardContent>
       <CardFooter className="grid gap-4">
-        <Button >
+        <Button>
           <CheckIcon className="mr-2 h-4 w-4" /> Confirm Booking
         </Button>
-        <Button  >
+        <Button onClick={openDialog}>
           <EyeOpenIcon className="mr-2 h-4 w-4" /> View details
         </Button>
       </CardFooter>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Journey Details</DialogTitle>
+            <DialogDescription>
+              <div>
+                <p><strong>Flight 1</strong></p>
+                <p>Departure Airport: {info.flight1.departure_airport}</p>
+                <p>Arrival Airport: {info.flight1.arrival_airport}</p>
+                <p>Airline: {info.flight1.airline}</p>
+                <p>Departure Time: {info.flight1.departure_time}</p>
+                <p>Arrival Time: {info.flight1.arrival_time}</p>
+              </div>
+              <div className="mt-4">
+                <p><strong>Flight 2</strong></p>
+                <p>Departure Airport: {info.flight2.departure_airport}</p>
+                <p>Arrival Airport: {info.flight2.arrival_airport}</p>
+                <p>Airline: {info.flight2.airline}</p>
+                <p>Departure Time: {info.flight2.departure_time}</p>
+                <p>Arrival Time: {info.flight2.arrival_time}</p>
+              </div>
+              <div className="mt-4">
+                <p><strong>Total Cost: ${info.cost}</strong></p>
+              </div>
+            </DialogDescription>
+          </DialogHeader>
+          <DialogClose asChild>
+            <Button>Close</Button>
+          </DialogClose>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }

@@ -19,7 +19,6 @@ export default function Journeys() {
           }
         });
         setJourneys(response.data.data);
-        //console.log(journeys);
       } catch (error) {
         setError(error);
       } finally {
@@ -49,7 +48,7 @@ export default function Journeys() {
         </h2>
         <div className="flex flex-wrap gap-4 justify-center">
           {journeys.map((journey) => (
-            <JourneyCard key={journey.id} info={journey} className="w-[380px] h-[300px]" />
+            <JourneyCard key={journey.id} info={journey} className="w-[380px] h-auto" />
           ))}
         </div>
       </div>
