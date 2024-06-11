@@ -1,4 +1,4 @@
-import { BellIcon, CheckIcon } from "@radix-ui/react-icons";
+import {  CheckIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 import { cn } from "../../lib/utils";
 import { Button } from "./button";
 import {
@@ -49,9 +49,12 @@ export function JourneyCard({
           <p className="text-sm">${info.cost}</p>
         </div>
       </CardContent>
-      <CardFooter>
-        <Button className="w-full">
+      <CardFooter className="grid gap-4">
+        <Button >
           <CheckIcon className="mr-2 h-4 w-4" /> Confirm Booking
+        </Button>
+        <Button  >
+          <EyeOpenIcon className="mr-2 h-4 w-4" /> View details
         </Button>
       </CardFooter>
     </Card>
