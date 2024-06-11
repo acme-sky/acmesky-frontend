@@ -19,6 +19,7 @@ import {
   DialogTrigger,
   DialogClose,
 } from "./dialog";
+import { FlightCard } from "./flight_card";
 
 type JourneyCardProps = {
   info: Journey_info;
@@ -72,8 +73,12 @@ export function JourneyCard({
         </Button>
       </CardFooter>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
+        <DialogContent className="flex flex-col items-center" style={{ minWidth: '800px' }}>
+        <div className="flex space-x-4 mb-4">
+            <FlightCard info={info.flight1} />
+            <FlightCard info={info.flight2} />
+        </div>
+          {/*<DialogHeader>
             <DialogTitle>Journey Details</DialogTitle>
             <DialogDescription>
               <div>
@@ -96,7 +101,7 @@ export function JourneyCard({
                 <p><strong>Total Cost: ${info.cost}</strong></p>
               </div>
             </DialogDescription>
-          </DialogHeader>
+          </DialogHeader>*/}
           <DialogClose asChild>
             <Button>Close</Button>
           </DialogClose>
