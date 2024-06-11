@@ -24,7 +24,7 @@ export function JourneyCard({
     <Card className={cn("w-[380px]", className)} {...props}>
       <CardHeader>
         <CardTitle className="flex items-center">
-          {info.flight1.departure_airport} - {info.flight2.arrival_airport}
+          {info.flight1.departure_airport} - {info.flight1.arrival_airport}
         </CardTitle>
       </CardHeader>
       <CardContent className="grid gap-4">
