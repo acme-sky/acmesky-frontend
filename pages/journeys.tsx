@@ -8,12 +8,13 @@ export default function Journeys() {
   const [journeys, setJourneys] = useState<Journey_info[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const apiUrl = process.env.NEXT_PUBLIC_ACMESKY_API_HOST;
 
   useEffect(() => {
     async function fetchJourneys() {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:8080/v1/journeys/", {
+        const response = await axios.get(`${apiUrl}journeys/`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

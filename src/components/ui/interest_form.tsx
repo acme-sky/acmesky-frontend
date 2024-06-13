@@ -43,6 +43,8 @@ export function InterestForm() {
   })
 
   const [token, setToken] = useState<string| null>("");
+  const apiUrl = process.env.NEXT_PUBLIC_ACMESKY_API_HOST;
+
 
   useEffect(() => {
     /*const storedUserId: string | null = localStorage.getItem("user_id");
@@ -80,7 +82,7 @@ export function InterestForm() {
 
       console.log(payload)
 
-      const response = await axios.post('http://localhost:8080/v1/interests/', payload, {
+      const response = await axios.post(`${apiUrl}interests/`, payload, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

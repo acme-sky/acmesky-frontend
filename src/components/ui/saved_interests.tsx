@@ -20,6 +20,7 @@ const fetcher = (url: string, token:string | null | unknown) =>
 export function SavedInterest() {
     //const [user_id, setUser_id] = useState<string | null>(null);
     const [token, setToken] = useState<string| null>("");
+    const apiUrl = process.env.NEXT_PUBLIC_ACMESKY_API_HOST;
 
 
     useEffect(() => {
@@ -30,7 +31,7 @@ export function SavedInterest() {
         setToken(storedToken);
     }, []);
 
-    const { data, error } = useSWR(['http://localhost:8080/v1/interests/', token], ([url, token]) => fetcher(url, token))
+    const { data, error } = useSWR([`${apiUrl}interests/`, token], ([url, token]) => fetcher(url, token))
     
     if (!data) {
         return <div>Loading...</div>;

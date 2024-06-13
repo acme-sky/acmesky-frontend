@@ -12,6 +12,7 @@ export function SignupFormDemo() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter()
+  const apiUrl = process.env.NEXT_PUBLIC_ACMESKY_API_HOST;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,7 +27,7 @@ export function SignupFormDemo() {
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/v1/login/`, {
+      const response = await fetch(`${apiUrl}login/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
