@@ -46,3 +46,15 @@ export interface Journey_info {
     user_id: number
 }
 
+export interface Offer_info {
+    id: number;
+    created_at: string;
+    message: string;
+    expired: string;
+    token: string;
+    is_used: boolean;
+    payment_link: string;
+    payment_paid: boolean;
+    journey_id: number;
+    user_id: number;
+}

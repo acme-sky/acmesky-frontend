@@ -1,27 +1,28 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { MainNav } from "../src/components/ui/main-nav";
-import { JourneyCard } from "@/src/components/ui/journey_card";
-import { Journey_info } from "@/types";
+import { OfferCard } from "@/src/components/ui/offer_card";
+import { Offer_info } from "@/types";
+import { Card, CardContent, CardHeader, CardTitle } from "@/src/components/ui/card";
 import { LoadingSpinner } from "@/src/components/ui/loading_spinner";
-import { Card, CardContent} from "@/src/components/ui/card";
 
-export default function Journeys() {
-  const [journeys, setJourneys] = useState<Journey_info[]>([]);
+export default function Offers() {
+  const [offers, setOffers] = useState<Offer_info[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const apiUrl = process.env.NEXT_PUBLIC_ACMESKY_API_HOST;
 
   useEffect(() => {
-    async function fetchJourneys() {
+    async function fetchOffers() {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get(`${apiUrl}journeys/`, {
+        const response = await axios.get(`${apiUrl}offers/`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
         });
-        setJourneys(response.data.data);
+        const validOffers : Offer_info = response.data.data.filter((offer: Offer_info) => new Date(offer.expired) > new Date());
+        setOffers(validOffers);
       } catch (error) {
         setError(error);
       } finally {
@@ -29,16 +30,8 @@ export default function Journeys() {
       }
     }
 
-    fetchJourneys();
+    fetchOffers();
   }, []);
-
-  if (loading) {
-    return <LoadingSpinner />;
-  }
-
-  if (error) {
-    return <LoadingSpinner />;
-  }
 
   return (
     <div className="flex flex-col h-screen">
@@ -47,7 +40,7 @@ export default function Journeys() {
       </div>
       <div className="flex-1 overflow-y-auto space-y-4 p-8 pt-6">
         <h2 className="text-3xl font-bold tracking-tight flex h-16 items-center px-10 justify-center">
-          Your Journeys
+          Your Offers
         </h2>
         <Card>
           {loading && (
@@ -62,8 +55,8 @@ export default function Journeys() {
           )}
           {!loading && !error && (
             <CardContent className="flex flex-wrap gap-4 justify-center">
-              {journeys.map((journey) => (
-                <JourneyCard key={journey.id} info={journey} className="w-[380px] h-auto" />
+              {offers.map((offer) => (
+                <OfferCard key={offer.id} info={offer} className="w-[380px] h-auto" />
               ))}
             </CardContent>
           )}

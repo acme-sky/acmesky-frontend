@@ -11,6 +11,7 @@ import {
 import { useEffect, useState } from 'react';
 import { User, Interest} from "../../../types"
 import axios from 'axios'
+import { LoadingSpinner } from './loading_spinner';
 
 const fetcher = (url: string, token:string | null | unknown) =>
     axios
@@ -34,13 +35,13 @@ export function SavedInterest() {
     const { data, error } = useSWR([`${apiUrl}interests/`, token], ([url, token]) => fetcher(url, token))
     
     if (!data) {
-        return <div>Loading...</div>;
+        return <LoadingSpinner />;
     }
     
     const interests: Interest[] = data.data
 
     if (error) {
-        return <div>Error loading interests: {error.message}</div>;
+        return <LoadingSpinner />;
     }
 
 
