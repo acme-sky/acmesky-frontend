@@ -1,17 +1,3 @@
-import { Button } from "../src/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../src/components/ui/card";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "../src/components/ui/tabs";
 import { MainNav } from "../src/components/ui/main-nav";
 import { SavedInterest } from "@/src/components/ui/saved_interests";
 import { UserNav } from "@/src/components/ui/user-nav";
@@ -30,9 +16,7 @@ export default function Interests() {
           Your interests
         </h2>
         <div className="space-y-4">
-          <Card className="flex-1">
             <SavedInterest />
-          </Card>
         </div>
       </div>
     </div>

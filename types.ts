@@ -1,3 +1,5 @@
+import { ColumnDef } from "@tanstack/react-table";
+
 export interface User {
     id: number;
     created_at: string;
@@ -58,3 +60,8 @@ export interface Offer_info {
     journey_id: number;
     user_id: number;
 }
+
+export interface DataTableProps<TData, TValue> {
+    columns: ColumnDef<TData, TValue>[]
+    data: TData[]
+  }

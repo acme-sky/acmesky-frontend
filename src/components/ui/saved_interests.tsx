@@ -12,6 +12,51 @@ import { useEffect, useState } from 'react';
 import { User, Interest} from "../../../types"
 import axios from 'axios'
 import { LoadingSpinner } from './loading_spinner';
+import { InterestTable } from './interest_table';
+import { ColumnDef } from '@tanstack/react-table';
+
+export const columns: ColumnDef<Interest>[] = [
+    {
+      accessorKey: "id",
+      header: "ID",
+    },
+    {
+      accessorKey: "created_at",
+      header: "Created At",
+    },
+    {
+      accessorKey: "flight1_departure_time",
+      header: "Outward Flight Departure Time",
+    },
+    {
+      accessorKey: "flight1_departure_airport",
+      header: "Outward Flight Departure Airport",
+    },
+    {
+      accessorKey: "flight1_arrival_time",
+      header: "Outward Flight Arrival Time",
+    },
+    {
+      accessorKey: "flight1_arrival_airport",
+      header: "Outward Flight Arrival Airport",
+    },
+    {
+      accessorKey: "flight2_departure_time",
+      header: "Return Flight Departure Time",
+    },
+    {
+      accessorKey: "flight2_departure_airport",
+      header: "Return Flight Departure Airport",
+    },
+    {
+      accessorKey: "flight2_arrival_time",
+      header: "Return Flight Arrival Time",
+    },
+    {
+      accessorKey: "flight2_arrival_airport",
+      header: "Return Flight Arrival Airport",
+    },
+];
 
 const fetcher = (url: string, token:string | null | unknown) =>
     axios
@@ -47,40 +92,8 @@ export function SavedInterest() {
 
 
     return (
-        <Table>
-            <TableCaption>A list of your saved Interests</TableCaption>
-            <TableHeader>
-                <TableRow>
-                    <TableHead className="w-[100px]">ID</TableHead>
-                    <TableHead>Created At</TableHead>
-                    <TableHead>Outward Flight Departure Time</TableHead>
-                    <TableHead>Outward Flight Departure Airport</TableHead>
-                    <TableHead>Outward Flight Arrival Time</TableHead>
-                    <TableHead>Outward Flight Arrival Airport</TableHead>
-                    <TableHead>Return Flight Departure Time</TableHead>
-                    <TableHead>Return Flight Departure Airport</TableHead>
-                    <TableHead>Return Flight Arrival Time</TableHead>
-                    <TableHead>Return Flight Arrival Airport</TableHead>
-                    {/*<TableHead>User</TableHead>*/}
-                </TableRow>
-            </TableHeader>
-            <TableBody>
-                {interests.map((interest) => (
-                    <TableRow key={interest.id}>
-                        <TableCell className="font-medium">{interest.id}</TableCell>
-                        <TableCell>{interest.created_at}</TableCell>
-                        <TableCell>{interest.flight1_departure_time || "0001-01-01T00:00:00Z"}</TableCell>
-                        <TableCell>{interest.flight1_departure_airport || ""}</TableCell>
-                        <TableCell>{interest.flight1_arrival_time || "0001-01-01T00:00:00Z"}</TableCell>
-                        <TableCell>{interest.flight1_arrival_airport || ""}</TableCell>
-                        <TableCell>{interest.flight2_departure_time || "null"}</TableCell>
-                        <TableCell>{interest.flight2_departure_airport || "null"}</TableCell>
-                        <TableCell>{interest.flight2_arrival_time || "null"}</TableCell>
-                        <TableCell>{interest.flight2_arrival_airport || "null"}</TableCell>
-                        {/*<TableCell>{interest.user.username}</TableCell>*/}
-                    </TableRow>
-                ))}
-            </TableBody>
-        </Table>
-    );
+
+    <div className="container mx-auto py-1">
+        <InterestTable columns={columns} data={interests}  />
+    </div>)
 }
