@@ -26,13 +26,13 @@ export function FlightCard({
         <CardTitle className="flex items-center">{info.departure_airport} - {info.arrival_airport} </CardTitle>
       </CardHeader>
       <CardContent className="grid gap-4">
-        <div className="flex items-center space-x-4 rounded-md border p-4">
+        {/*<div className="flex items-center space-x-4 rounded-md border p-4">*/}
           <div className="flex-1 space-y-1">
             <p className="text-sm font-medium leading-none">
               Airline: {info.airline}
             </p>
-            <p className="text-sm text-muted-foreground">Token: {info.token}</p>
-          </div>
+            {/*<p className="text-sm text-muted-foreground">Token: {info.token}</p>*/} 
+          {/*</div>*/}
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div>

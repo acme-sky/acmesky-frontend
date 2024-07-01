@@ -1,27 +1,18 @@
-import axios from 'axios';
-import { useRouter } from 'next/router';
 import { PersonIcon } from "@radix-ui/react-icons";
 import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
+  Avatar
 } from "./avatar";
 import { Button } from "./button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "./dropdown-menu";
 import Link from 'next/link';
 
 function logout() {
-  localStorage.clear("token");
-
+  localStorage.removeItem("token");
 }
 
 export function UserNav() {
@@ -34,10 +25,10 @@ export function UserNav() {
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="end" forceMount>
+      <DropdownMenuContent  align="end" forceMount>
         <DropdownMenuItem>
           <Link href="/login">
-          <Button className="w-full mt-2" onClick={logout}>
+          <Button className="w-full" onClick={logout}>
             Logout
           </Button>
           </Link>
