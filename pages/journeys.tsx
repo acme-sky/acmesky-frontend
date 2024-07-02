@@ -24,7 +24,7 @@ export default function Journeys() {
         });
         setJourneys(response.data.data);
       } catch (error) {
-        setError(error);
+        setError(toString(error));
       } finally {
         setLoading(false);
       }

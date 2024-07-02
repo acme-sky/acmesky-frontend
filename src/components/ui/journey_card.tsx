@@ -34,7 +34,7 @@ export function JourneyCard({
 
   const openDialog = () => setIsDialogOpen(true);
   const closeDialog = () => setIsDialogOpen(false);
-
+  console.log(info    )
   return (
     <Card className={cn("w-[380px]", className)} {...props}>
       <CardHeader>
@@ -51,14 +51,16 @@ export function JourneyCard({
             <p className="text-xs">Airline: {info.flight1.airline}</p>
           </div>
         </div>
-        <div className="border p-4 rounded-md space-y-2">
-          <div>
-            <p className="text-sm font-medium">Flight 2</p>
-            <p className="text-xs">Departure Airport: {info.flight2.departure_airport}</p>
-            <p className="text-xs">Arrival Airport: {info.flight2.arrival_airport}</p>
-            <p className="text-xs">Airline: {info.flight2.airline}</p>
+        {info.flight2 && (
+          <div className="border p-4 rounded-md space-y-2">
+            <div>
+              <p className="text-sm font-medium">Flight 2</p>
+              <p className="text-xs">Departure Airport: {info.flight2.departure_airport}</p>
+              <p className="text-xs">Arrival Airport: {info.flight2.arrival_airport}</p>
+              <p className="text-xs">Airline: {info.flight2.airline}</p>
+            </div>
           </div>
-        </div>
+        )}
         <div>
           <p className="text-sm font-medium leading-none">Total Cost</p>
           <p className="text-sm">${info.cost}</p>
@@ -74,34 +76,10 @@ export function JourneyCard({
       </CardFooter>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="flex flex-col items-center" style={{ minWidth: '800px' }}>
-        <div className="flex space-x-4 mb-4">
+          <div className="flex space-x-4 mb-4">
             <FlightCard info={info.flight1} />
-            <FlightCard info={info.flight2} />
-        </div>
-          {/*<DialogHeader>
-            <DialogTitle>Journey Details</DialogTitle>
-            <DialogDescription>
-              <div>
-                <p><strong>Flight 1</strong></p>
-                <p>Departure Airport: {info.flight1.departure_airport}</p>
-                <p>Arrival Airport: {info.flight1.arrival_airport}</p>
-                <p>Airline: {info.flight1.airline}</p>
-                <p>Departure Time: {info.flight1.departure_time}</p>
-                <p>Arrival Time: {info.flight1.arrival_time}</p>
-              </div>
-              <div className="mt-4">
-                <p><strong>Flight 2</strong></p>
-                <p>Departure Airport: {info.flight2.departure_airport}</p>
-                <p>Arrival Airport: {info.flight2.arrival_airport}</p>
-                <p>Airline: {info.flight2.airline}</p>
-                <p>Departure Time: {info.flight2.departure_time}</p>
-                <p>Arrival Time: {info.flight2.arrival_time}</p>
-              </div>
-              <div className="mt-4">
-                <p><strong>Total Cost: ${info.cost}</strong></p>
-              </div>
-            </DialogDescription>
-          </DialogHeader>*/}
+            {info.flight2 && <FlightCard info={info.flight2} />}
+          </div>
           <DialogClose asChild>
             <Button>Close</Button>
           </DialogClose>
