@@ -12,7 +12,7 @@ export default function Interests() {
             </div>
       </div>
       <div className="flex-1 overflow-y-auto space-y-4 p-8 pt-6">
-        <h2 className="text-3xl font-bold tracking-tight flex h-16 items-center px-10">
+        <h2 className="text-3xl font-bold tracking-tight flex h-16 items-center px-10 justify-center">
           Your interests
         </h2>
         <div className="space-y-4">

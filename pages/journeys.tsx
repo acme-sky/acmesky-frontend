@@ -10,7 +10,7 @@ import { UserNav } from "@/src/components/ui/user-nav";
 export default function Journeys() {
   const [journeys, setJourneys] = useState<Journey_info[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<String>('');
   const apiUrl = process.env.NEXT_PUBLIC_ACMESKY_API_HOST;
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function Journeys() {
         });
         setJourneys(response.data.data);
       } catch (error) {
-        setError(toString(error));
+        setError(String(error));
       } finally {
         setLoading(false);
       }

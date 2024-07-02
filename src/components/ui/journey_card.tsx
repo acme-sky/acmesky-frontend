@@ -34,7 +34,7 @@ export function JourneyCard({
 
   const openDialog = () => setIsDialogOpen(true);
   const closeDialog = () => setIsDialogOpen(false);
-  console.log(info    )
+
   return (
     <Card className={cn("w-[380px]", className)} {...props}>
       <CardHeader>
