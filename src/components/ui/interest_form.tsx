@@ -1,53 +1,57 @@
-"use client"
-import { useState, useEffect } from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Calendar as CalendarIcon } from "lucide-react"
-import { Button } from "./button"
+"use client";
+import { useState, useEffect } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, FieldValues } from "react-hook-form";
+import { z } from "zod";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { Button } from "./button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "./form"
-import { Input } from "./input"
-import { Calendar, DateRange } from "./calendar"
+} from "./form";
+import { Calendar, DateRange } from "./calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "./popover"
-import { cn } from "../../lib/utils"
-import { addDays, format } from "date-fns"
-import axios from "axios"
-import { AirportCombobox } from "./airports_combobox"
+} from "./popover";
+import { cn } from "../../lib/utils";
+import { addDays, format } from "date-fns";
+import axios from "axios";
+import { AirportCombobox } from "./airports_combobox";
+import Swal from "sweetalert2";
 
-// Update the schema to handle date_range as an object with from and to dates
 const formSchema = z.object({
-  flight1dep: z.string().min(3),
-  flight1arr: z.string().min(3),
-  flight2dep: z.string().min(3),
-  flight2arr: z.string().min(3),
+  flight1dep: z.string().min(3, "Outward Flight Departure is required"),
+  flight1arr: z.string().min(3, "Outward Flight Arrival is required"),
+  flight2dep: z.string().optional(),
+  flight2arr: z.string().optional(),
   date_range: z.object({
     from: z.date(),
     to: z.date()
   })
-})
+}).refine(data => {
+  const flight2depFilled = !!data.flight2dep;
+  const flight2arrFilled = !!data.flight2arr;
+  return (flight2depFilled && flight2arrFilled) || (!flight2depFilled && !flight2arrFilled);
+}, {
+  message: "Both Return Flight Departure and Arrival must be provided or neither",
+  path: ["flight2dep", "flight2arr"] // This will show the error on both fields
+});
 
 export function InterestForm() {
   // Define your form.
   const [date, setDate] = useState<DateRange | undefined>({
-    from: new Date(2024, 0, 20),
-    to: addDays(new Date(2024, 0, 20), 20),
-  })
+    from: new Date(2024, 9, 20),
+    to: addDays(new Date(2024, 9, 20), 14),
+  });
 
-  const [token, setToken] = useState<string| null>("");
+  const [token, setToken] = useState<string | null>(null);
   const apiUrl = process.env.NEXT_PUBLIC_ACMESKY_API_HOST;
-
 
   useEffect(() => {
     const storedToken: string | null = localStorage.getItem("token");
@@ -59,37 +63,70 @@ export function InterestForm() {
     defaultValues: {
       flight1dep: "",
       flight1arr: "",
-      flight2dep: "",
-      flight2arr: "",
       date_range: {
-        from: new Date(2024, 0, 20),
-        to: addDays(new Date(2024, 0, 20), 20),
+        from: new Date(2024, 9, 20),
+        to: addDays(new Date(2024, 9, 20), 5),
       }
     }
-  })
+  });
 
   // Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const payload = {
+      let payload: any = {
         flight1_departure_airport: values.flight1dep,
         flight1_departure_time: values.date_range.from.toISOString(),
         flight1_arrival_airport: values.flight1arr,
-        flight1_arrival_time: values.date_range.from.toISOString(),
-        flight2_departure_airport: values.flight2dep,
-        flight2_departure_time: values.date_range.to.toISOString(),
-        flight2_arrival_airport: values.flight2arr,
-        flight2_arrival_time: values.date_range.to.toISOString(),
+        flight1_arrival_time: values.date_range.to.toISOString(),
       };
-
-      console.log(payload)
-
+  
+      if (values.flight2dep && values.flight2arr) {
+        payload = {
+          ...payload,
+          flight2_departure_airport: values.flight2dep,
+          flight2_departure_time: values.date_range.from.toISOString(),
+          flight2_arrival_airport: values.flight2arr,
+          flight2_arrival_time: values.date_range.to.toISOString(),
+        };
+      }
+  
+      console.log(payload);
+  
       const response = await axios.post(`${apiUrl}interests/`, payload, {
         headers: { Authorization: `Bearer ${token}` }
       });
-
+  
       console.log('Form submitted successfully', response.data);
+      Swal.fire({
+        position: "center-right",
+        icon: "success",
+        title: "Saved!",
+        text: "Your new interest has been saved! We'll get in touch.",
+        timer: 2000,
+        showConfirmButton: false
+      });
+  
+      // Reset form fields after successful submission
+      form.reset({
+        flight1dep: "",
+        flight1arr: "",
+        flight2dep: "",
+        flight2arr: "",
+        date_range: {
+          from: new Date(2024, 9, 20),
+          to: addDays(new Date(2024, 9, 20), 5),
+        }
+      });
+      setDate({
+        from: new Date(2024, 9, 20),
+        to: addDays(new Date(2024, 9, 20), 5),
+      });
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Submit failed, please check the fields.",
+      });
       console.error('Error submitting form', error);
     }
   }
@@ -187,8 +224,8 @@ export function InterestForm() {
                     defaultMonth={date?.from}
                     selected={date}
                     onSelect={(range) => {
-                      setDate(range)
-                      field.onChange(range)
+                      setDate(range);
+                      field.onChange(range);
                     }}
                     numberOfMonths={2}
                   />
@@ -201,5 +238,5 @@ export function InterestForm() {
         <Button type="submit">Submit</Button>
       </form>
     </Form>
-  )
+  );
 }
