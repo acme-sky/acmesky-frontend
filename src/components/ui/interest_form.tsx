@@ -102,7 +102,7 @@ export function InterestForm() {
           name="flight1dep"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Flight 1 Departure</FormLabel>
+              <FormLabel>Outward Flight Departure</FormLabel>
               <FormControl>
                 <AirportCombobox value={field.value} onChange={field.onChange} />
               </FormControl>
@@ -115,7 +115,7 @@ export function InterestForm() {
           name="flight1arr"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Flight 1 Arrival</FormLabel>
+              <FormLabel>Outward Flight Arrival</FormLabel>
               <FormControl>
                 <AirportCombobox value={field.value} onChange={field.onChange} />
               </FormControl>
@@ -128,7 +128,7 @@ export function InterestForm() {
           name="flight2dep"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Flight 2 Departure</FormLabel>
+              <FormLabel>Return Flight Departure</FormLabel>
               <FormControl>
                 <AirportCombobox value={field.value} onChange={field.onChange} />
               </FormControl>
@@ -141,7 +141,7 @@ export function InterestForm() {
           name="flight2arr"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Flight 2 arrival</FormLabel>
+              <FormLabel>Return Flight Arrival</FormLabel>
               <FormControl>
                 <AirportCombobox value={field.value} onChange={field.onChange} />
               </FormControl>

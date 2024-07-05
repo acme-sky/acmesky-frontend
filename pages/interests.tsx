@@ -8,15 +8,15 @@ export default function Interests() {
       <div className="flex h-16 items-center px-4">
         <MainNav className="mx-6" />
         <div className="ml-auto flex items-center space-x-4">
-              <UserNav />
-            </div>
+          <UserNav />
+        </div>
       </div>
       <div className="flex-1 overflow-y-auto space-y-4 p-8 pt-6">
         <h2 className="text-3xl font-bold tracking-tight flex h-16 items-center px-10 justify-center">
           Your interests
         </h2>
-        <div className="space-y-4">
-            <SavedInterest />
+        <div className="space-y-4 w-full">
+          <SavedInterest />
         </div>
       </div>
     </div>

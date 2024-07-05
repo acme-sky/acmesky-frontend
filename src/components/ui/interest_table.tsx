@@ -21,6 +21,7 @@ import {
 } from "./table";
 import { useState } from "react";
 import { rankItem, compareItems, RankingInfo } from "@tanstack/match-sorter-utils";
+import { format } from "date-fns";
 
 // Define a custom fuzzy filter function
 const fuzzyFilter = (row: { getValue: (arg0: any) => any; }, columnId: any, value: string, addMeta: (arg0: { itemRank: RankingInfo; }) => void) => {
@@ -60,7 +61,7 @@ export function InterestTable<TData, TValue>({
   });
 
   return (
-    <div>
+    <div className="w-full">
       <div className="flex items-center py-4">
         <Input
           placeholder="Search all columns..."
@@ -69,7 +70,7 @@ export function InterestTable<TData, TValue>({
           className="max-w-sm"
         />
       </div>
-      <Table>
+      <Table className="w-full">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
@@ -127,4 +128,3 @@ export function InterestTable<TData, TValue>({
     </div>
   );
 }
-    

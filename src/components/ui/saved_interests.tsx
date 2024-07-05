@@ -14,6 +14,7 @@ import axios from 'axios'
 import { LoadingSpinner } from './loading_spinner';
 import { InterestTable } from './interest_table';
 import { ColumnDef } from '@tanstack/react-table';
+import { format } from 'date-fns';
 
 export const columns: ColumnDef<Interest>[] = [
     {
@@ -23,10 +24,26 @@ export const columns: ColumnDef<Interest>[] = [
     {
       accessorKey: "created_at",
       header: "Created At",
+      cell: ({ cell }) => {
+        const date = new Date(cell.getValue<string>());
+        return (
+          <div className="whitespace-nowrap overflow-hidden text-ellipsis">
+            {format(date, 'dd/MM/yyyy - HH:mm')}
+          </div>
+        );
+      }
     },
     {
       accessorKey: "flight1_departure_time",
       header: "Outward Flight Departure Time",
+      cell: ({ cell }) => {
+        const date = new Date(cell.getValue<string>());
+        return (
+          <div className="whitespace-nowrap overflow-hidden text-ellipsis">
+            {format(date, 'dd/MM/yyyy - HH:mm')}
+          </div>
+        );
+      }
     },
     {
       accessorKey: "flight1_departure_airport",
@@ -35,6 +52,14 @@ export const columns: ColumnDef<Interest>[] = [
     {
       accessorKey: "flight1_arrival_time",
       header: "Outward Flight Arrival Time",
+      cell: ({ cell }) => {
+        const date = new Date(cell.getValue<string>());
+        return (
+          <div className="whitespace-nowrap overflow-hidden text-ellipsis">
+            {format(date, 'dd/MM/yyyy - HH:mm')}
+          </div>
+        );
+      }
     },
     {
       accessorKey: "flight1_arrival_airport",
@@ -43,6 +68,14 @@ export const columns: ColumnDef<Interest>[] = [
     {
       accessorKey: "flight2_departure_time",
       header: "Return Flight Departure Time",
+      cell: ({ cell }) => {
+        const date = new Date(cell.getValue<string>());
+        return (
+          <div className="whitespace-nowrap overflow-hidden text-ellipsis">
+            {format(date, 'dd/MM/yyyy - HH:mm')}
+          </div>
+        );
+      }
     },
     {
       accessorKey: "flight2_departure_airport",
@@ -51,6 +84,14 @@ export const columns: ColumnDef<Interest>[] = [
     {
       accessorKey: "flight2_arrival_time",
       header: "Return Flight Arrival Time",
+      cell: ({ cell }) => {
+        const date = new Date(cell.getValue<string>());
+        return (
+          <div className="whitespace-nowrap overflow-hidden text-ellipsis">
+            {format(date, 'dd/MM/yyyy - HH:mm')}
+          </div>
+        );
+      }
     },
     {
       accessorKey: "flight2_arrival_airport",
