@@ -125,7 +125,7 @@ export function InterestForm() {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Submit failed, please check the fields.",
+        text: "Submit failed, please check the fields or connection.",
       });
       console.error('Error submitting form', error);
     }

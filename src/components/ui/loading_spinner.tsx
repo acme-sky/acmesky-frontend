@@ -14,11 +14,11 @@ interface LoadingSpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
 const LoadingSpinner = React.forwardRef<HTMLDivElement, LoadingSpinnerProps>((props, ref) => {
   const { className, ...rest } = props;
   return (
-    <Card className="flex items-center justify-center w-full h-full p-6 border border-gray-300 shadow-lg">
-      <CardContent className="flex items-center justify-center w-full h-full">
+    <div className="flex items-center justify-center w-full h-full p-6">
+      <div className="flex items-center justify-center w-full h-full">
         <div ref={ref} className={cn(spinnerVariants, className)} {...rest} />
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 });
 

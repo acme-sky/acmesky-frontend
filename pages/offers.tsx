@@ -54,7 +54,7 @@ export default function Offers() {
           )}
           {error && (
             <div className="flex items-center justify-center">
-              <p className="text-red-500">Error loading offers</p>
+              <LoadingSpinner />
             </div>
           )}
           {!loading && !error && (
