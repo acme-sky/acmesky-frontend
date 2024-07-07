@@ -66,7 +66,7 @@ export function JourneyCard({
           <Sheet>
             <SheetTrigger asChild>
               <Button>
-                <EyeOpenIcon className="mr-2 h-4 w-4" /> View details
+                <EyeOpenIcon className="mr-2 h-4 w-4"   /> View details
               </Button>
             </SheetTrigger>
             <SheetContent className="w-[90%] sm:w-[80%] lg:w-[25%]" side="right">
