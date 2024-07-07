@@ -31,9 +31,9 @@ export function JourneyCard({
     <div className="relative flex">
       <Card className={cn("w-[400px]", className)} {...props}>
         <CardHeader>
-          <CardTitle className="flex items-center">
-            {info.flight1.departure_airport} - {info.flight1.arrival_airport}
-          </CardTitle>
+        <CardTitle className="flex items-center">
+          {info.flight1.departure_airport} - {info.flight2 ? info.flight2.arrival_airport : info.flight1.arrival_airport}
+        </CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="border p-4 rounded-md space-y-2">
@@ -61,7 +61,7 @@ export function JourneyCard({
         </CardContent>
         <CardFooter className="grid gap-4">
           <Button>
-            <CheckIcon className="mr-2 h-4 w-4" /> Confirm Booking
+            <CheckIcon className="mr-2 h-4 w-4" /> Go to offer
           </Button>
           <Sheet>
             <SheetTrigger asChild>
