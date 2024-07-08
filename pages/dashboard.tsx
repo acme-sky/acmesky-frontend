@@ -22,6 +22,41 @@ import { RecentSales } from "../src/components/ui/recent-sales"
 import { Search } from "../src/components/ui/search"
 import { UserNav } from "../src/components/ui/user-nav"
 import { SavedInterest } from "@/src/components/ui/saved_interests"
+import { HoverEffect } from "@/src/components/ui/card-hover"
+import UserCard from "@/src/components/ui/user_card"
+
+export const features = [
+  {
+    title: "Interests",
+    description:
+      "View your saved interests. We try to create a journey for you based on those.",
+    link: "/interests",
+  },
+  {
+    title: "Add a new interest",
+    description:
+      "Add an interest for your dream trip, then let us do our thing.",
+    link: "/newinterest",
+  },
+  {
+    title: "Journeys",
+    description:
+      "View the journeys we created for you.",
+    link: "/journeys",
+  },
+  {
+    title: "Offers",
+    description:
+      "We did our work, now reedem an offer or pay.",
+    link: "/offers",
+  },
+  {
+    title: "Receipts",
+    description:
+      "Check on details for your upcoming trips.",
+    link: "/receipts",
+  },
+];
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -30,23 +65,6 @@ export const metadata: Metadata = {
 
 export default function Dashboard() {
   return (
-    <>
-      <div className="md:hidden">
-        <Image
-          src="/examples/dashboard-light.png"
-          width={1280}
-          height={866}
-          alt="Dashboard"
-          className="block dark:hidden"
-        />
-        <Image
-          src="/examples/dashboard-dark.png"
-          width={1280}
-          height={866}
-          alt="Dashboard"
-          className="hidden dark:block"
-        />
-      </div>
       <div className="hidden flex-col md:flex">
         <div className="border-b">
           <div className="flex h-16 items-center px-4">
@@ -62,11 +80,11 @@ export default function Dashboard() {
             <div className="flex items-center space-x-2">
             </div>
           </div>
-          <Tabs defaultValue="overview" className="space-y-4">
+          <Tabs defaultValue="features" className="space-y-4">
             <TabsList>
-              <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="analytics" disabled>
-                Analytics
+              <TabsTrigger value="features">Our services</TabsTrigger>
+              <TabsTrigger value="user" >
+                Your info
               </TabsTrigger>
               <TabsTrigger value="reports" disabled>
                 Reports
@@ -75,135 +93,18 @@ export default function Dashboard() {
                 Notifications
               </TabsTrigger>
             </TabsList>
-            <TabsContent value="overview" className="space-y-4">
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">
-                      Total Revenue
-                    </CardTitle>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      className="h-4 w-4 text-muted-foreground"
-                    >
-                      <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                    </svg>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">$45,231.89</div>
-                    <p className="text-xs text-muted-foreground">
-                      +20.1% from last month
-                    </p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">
-                      Subscriptions
-                    </CardTitle>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      className="h-4 w-4 text-muted-foreground"
-                    >
-                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                      <circle cx="9" cy="7" r="4" />
-                      <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-                    </svg>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">+2350</div>
-                    <p className="text-xs text-muted-foreground">
-                      +180.1% from last month
-                    </p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Sales</CardTitle>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      className="h-4 w-4 text-muted-foreground"
-                    >
-                      <rect width="20" height="14" x="2" y="5" rx="2" />
-                      <path d="M2 10h20" />
-                    </svg>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">+12,234</div>
-                    <p className="text-xs text-muted-foreground">
-                      +19% from last month
-                    </p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">
-                      Active Now
-                    </CardTitle>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      className="h-4 w-4 text-muted-foreground"
-                    >
-                      <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-                    </svg>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">+573</div>
-                    <p className="text-xs text-muted-foreground">
-                      +201 since last hour
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
-              <div className="grid gap-4 md:grid-cols-24 lg:grid-cols-24">
-                {/*<Card className="col-span-4">
-                  <CardHeader>
-                    <CardTitle>Overview</CardTitle>
-                  </CardHeader>
-                  <CardContent className="pl-2">
-                    <Overview />
-                  </CardContent>
-  </Card>*/}
-                <Card className="col-span-3">
-                  <CardHeader>
-                    <CardTitle>Saved interests</CardTitle>
-                    <CardDescription>
-                      This is a recap of your saved interests.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <SavedInterest />
-                  </CardContent>
-                </Card>
-              </div>
+            <TabsContent value="features" className="space-y-4">
+                <div className="max-w-5xl mx-auto px-8 flex-justify-center">
+                <HoverEffect items={features} />
+                </div>
+            </TabsContent>
+            <TabsContent value="user" className="space-y-4">
+                <div className="max-w-5xl mx-auto px-8 flex-justify-center">
+                <UserCard />
+                </div>
             </TabsContent>
           </Tabs>
         </div>
       </div>
-    </>
   )
 }
