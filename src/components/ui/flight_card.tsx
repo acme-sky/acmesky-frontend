@@ -28,7 +28,7 @@ export function FlightCard({ info, className, ...props }: FlightCardProps) {
             <div className="space-y-1">
               <p className="text-sm">Airport: {info.departure_airport}</p>
               <p className="text-sm">
-                Day and time of departure: {format(new Date(info.departure_time), "dd/MM/yyyy - HH:mm")}
+                Day and time: {format(new Date(info.departure_time), "dd/MM/yyyy - HH:mm")}
               </p>
             </div>
           </div>
@@ -37,7 +37,7 @@ export function FlightCard({ info, className, ...props }: FlightCardProps) {
             <div className="space-y-1">
               <p className="text-sm">Airport: {info.arrival_airport}</p>
               <p className="text-sm">
-                Day and time of arrival: {format(new Date(info.arrival_time), "dd/MM/yyyy - HH:mm")}
+                Day and time: {format(new Date(info.arrival_time), "dd/MM/yyyy - HH:mm")}
               </p>
             </div>
           </div>

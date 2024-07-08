@@ -18,14 +18,6 @@ export function OfferCard({
   className,
   ...props
 }: OfferCardProps) {
-  const handleConfirmOffer = () => {
-    // Implement the logic to confirm the offer
-    console.log("Offer confirmed");
-  };
-
-  const handlePaymentLink = () => {
-    window.open(info.payment_link, "_blank");
-  };
 
   const formatFlightInfo = (flight: any) => {
     return `${flight.departure_airport} to ${flight.arrival_airport} on ${format(new Date(flight.departure_time), "dd/MM/yyyy - HH:mm")}`;
@@ -45,7 +37,7 @@ export function OfferCard({
       <CardContent className="grid gap-4">
         <div className="flex justify-center space-x-4 rounded-md border p-4">
           <div className="flex-1 space-y-1">
-            <p className="text-m font-medium leading-none"> 
+            <p className="text-m font-medium leading-normal"> 
               {formatFlightInfo(info.journey.flight1)}
               {info.journey.flight2 && (
                 <>
