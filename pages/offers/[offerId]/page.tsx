@@ -1,21 +1,19 @@
-"use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { Offer_info } from "@/types";
-import { JourneyCard } from "@/src/components/ui/journey_card";
 import { Button } from "@/src/components/ui/button";
 import { LoadingSpinner } from "@/src/components/ui/loading_spinner";
 import { MainNav } from "@/src/components/ui/main-nav";
 import { UserNav } from "@/src/components/ui/user-nav";
 import { FlightCard } from "@/src/components/ui/flight_card";
 import Link from "next/link";
+import { GlareCard } from "@/src/components/ui/glare-card";
 
 const apiUrl = process.env.NEXT_PUBLIC_ACMESKY_API_HOST;
 
 const formatDateTime = (timestamp: number) => {
   let formattedDate = new Date(timestamp).toLocaleString("it-IT");
-  console.log(formattedDate);
   return formattedDate;
 };
 
@@ -46,6 +44,12 @@ const OfferPage = () => {
       fetchOffer();
     }
   }, [offerId]);
+
+  const handleGlareCardClick = () => {
+    if (!offer?.payment_paid) {
+      window.location.href = offer?.payment_link || "";
+    }
+  };
 
   return (
     <div className="flex flex-col h-screen">
@@ -94,12 +98,33 @@ const OfferPage = () => {
         </div>
         <div className="w-1/4 flex items-center pl-4">
           {!loading && !error && offer && (
-          <Button 
-            className="p-8 shadow-lg bg-gradient-to-r from-indigo-500 to-purple-500 border border-indigo-600 rounded-lg text-white font-bold hover:from-indigo-600 hover:to-purple-600 transition-colors duration-300"
-            onClick={() => window.location.href = offer.payment_link}
-          >
-            Proceed to Payment
-          </Button>
+            <>
+              {offer.payment_paid ? (
+                <p className="text-gray-500 text-center">Offer is already paid, check your receipts</p>
+              ) : (
+                <Link href={offer.payment_link} passHref>
+                  <GlareCard className="flex flex-col items-center justify-center" onClick={handleGlareCardClick}>
+                    <svg
+                      width="66"
+                      height="65"
+                      viewBox="0 0 66 65"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-7 w-7 text-white"
+                    >
+                      <path
+                        d="M8 8.05571C8 8.05571 54.9009 18.1782 57.8687 30.062C60.8365 41.9458 9.05432 57.4696 9.05432 57.4696"
+                        stroke="currentColor"
+                        strokeWidth="15"
+                        strokeMiterlimit="3.86874"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                    <p className="text-white font-bold text-xl mt-4">Proceed to payment</p>
+                  </GlareCard>
+                </Link>
+              )}
+            </>
           )}
         </div>
       </div>

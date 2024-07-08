@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CheckCircledIcon, CheckIcon, EyeOpenIcon } from "@radix-ui/react-icons";
+import { CheckCircledIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 import { cn } from "../../lib/utils";
 import { Button } from "./button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./card";
@@ -25,9 +25,10 @@ export function OfferCard({
 
   const formatDateTime = (timestamp: number) => {
     let formattedDate = new Date(timestamp).toLocaleString("it-IT");
-    console.log(formattedDate)
     return formattedDate;
   };
+
+  const buttonText = info.payment_paid ? "View Offer Detail" : "Confirm Offer";
 
   return (
     <Card className={cn("w-[380px]", className)} {...props}>
@@ -84,10 +85,11 @@ export function OfferCard({
             </DialogFooter>
           </DialogContent>
         </Dialog>
-        <Link href={`/offers/${info.id}/page`} className="w-full mt-2">
-        <Button className="w-full mt-2">
-          <CheckCircledIcon className="mr-2 h-4 w-4" />Confirm Offer
-        </Button>
+        <Link href={`/offers/${info.id}/page`} passHref>
+          <Button className="w-full mt-2">
+            {info.payment_paid ? <EyeOpenIcon className="mr-2 h-4 w-4" /> : <CheckCircledIcon className="mr-2 h-4 w-4" />}
+            {buttonText}
+          </Button>
         </Link>
       </CardFooter>
     </Card>
