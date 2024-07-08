@@ -23,7 +23,8 @@ export function MainNav({ className, ...props }: React.HTMLAttributes<HTMLElemen
             href={link.href}
             className={cn(
               "text-base font-medium transition-colors border-b-2",
-              router.pathname === link.href
+              (router.pathname === link.href || 
+               (link.href === "/offers" && router.pathname.startsWith("/offers")))
                 ? "text-primary border-primary"
                 : "text-muted-foreground border-transparent hover:text-primary hover:border-primary"
             )}

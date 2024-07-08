@@ -57,7 +57,7 @@ export interface Offer_info {
     is_used: boolean;
     payment_link: string;
     payment_paid: boolean;
-    journey_id: number;
+    journey: Journey_info;
     user_id: number;
 }
 

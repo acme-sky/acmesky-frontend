@@ -23,8 +23,9 @@ export default function Offers() {
             Authorization: `Bearer ${token}`
           }
         });
-        const validOffers: Offer_info[] = response.data.data.filter((offer: Offer_info) => new Date(offer.expired) > new Date());
-        setOffers(validOffers);
+        //const validOffers: Offer_info[] = response.data.data.filter((offer: Offer_info) => new Date(offer.expired) > new Date());
+        setOffers(response.data.data);
+        //console.log(validOffers)
       } catch (error: any) {
         setError(error.message);
       } finally {
