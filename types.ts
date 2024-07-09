@@ -64,4 +64,16 @@ export interface Offer_info {
 export interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
-  }
+}
+
+export interface Invoice_info {
+    id: number;
+    created_at: string;
+    rent_id: string;
+    rent_customer_name: string;
+    rent_pickup_address: string;
+    rent_pickup_date: string;
+    rent_address: string;
+    journey: Journey_info;
+    user: User;
+}

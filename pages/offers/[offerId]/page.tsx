@@ -100,7 +100,7 @@ const OfferPage = () => {
           {!loading && !error && offer && (
             <>
               {offer.payment_paid ? (
-                <p className="text-gray-500 text-center">Offer is already paid, check your receipts</p>
+                <p className="text-gray-500 text-center">Offer is already paid, check your <a className="font-bold underline" href="/invoices">invoices</a></p>              
               ) : (
                 <Link href={offer.payment_link} passHref>
                   <GlareCard className="flex flex-col items-center justify-center" onClick={handleGlareCardClick}>

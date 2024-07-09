@@ -51,10 +51,10 @@ export const features = [
     link: "/offers",
   },
   {
-    title: "Receipts",
+    title: "Invoices",
     description:
       "Check on details for your upcoming trips.",
-    link: "/receipts",
+    link: "/invoices",
   },
 ];
 
@@ -85,12 +85,6 @@ export default function Dashboard() {
               <TabsTrigger value="features">Our services</TabsTrigger>
               <TabsTrigger value="user" >
                 Your info
-              </TabsTrigger>
-              <TabsTrigger value="reports" disabled>
-                Reports
-              </TabsTrigger>
-              <TabsTrigger value="notifications" disabled>
-                Notifications
               </TabsTrigger>
             </TabsList>
             <TabsContent value="features" className="space-y-4">

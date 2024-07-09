@@ -12,7 +12,7 @@ export function MainNav({ className, ...props }: React.HTMLAttributes<HTMLElemen
     { href: "/interests", label: "My interests" },
     { href: "/journeys", label: "Journeys" },
     { href: "/offers", label: "Offers" },
-    { href: "/receipts", label: "Receipts" },
+    { href: "/invoices", label: "Invoices" },
   ];
 
   return (

@@ -3,11 +3,12 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './card';
 import { User } from '@/types';
 import axios from 'axios';
 import { cn } from '@/src/lib/utils';
+import { LoadingSpinner } from './loading_spinner';
 
 const formatDateTime = (timestamp: number) => {
-    let formattedDate = new Date(timestamp).toLocaleString("it-IT");
-    return formattedDate;
-  };
+  let formattedDate = new Date(timestamp).toLocaleString("it-IT");
+  return formattedDate;
+};
 
 
 const UserCard: React.FC = () => {
@@ -42,8 +43,12 @@ const UserCard: React.FC = () => {
     fetchUser();
   }, [apiUrl]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return <div className="flex items-center justify-center">
+    <LoadingSpinner />
+  </div>;
+  if (error) return <div className="flex items-center justify-center">
+    <LoadingSpinner />
+  </div>;
 
   return (
     user && (
