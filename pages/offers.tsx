@@ -23,9 +23,7 @@ export default function Offers() {
             Authorization: `Bearer ${token}`
           }
         });
-        //const validOffers: Offer_info[] = response.data.data.filter((offer: Offer_info) => new Date(offer.expired) > new Date());
         setOffers(response.data.data);
-        //console.log(validOffers)
       } catch (error: any) {
         setError(error.message);
       } finally {
@@ -61,7 +59,12 @@ export default function Offers() {
                   <p className="text-red-500">{error}</p>
                 </div>
               )}
-              {!loading && !error && (
+              {!loading && !error && offers.length === 0 && (
+                <div className="flex items-center justify-center">
+                  <p className="text-lg">No offers available for you :(</p>
+                </div>
+              )}
+              {!loading && !error && offers.length > 0 && (
                 <div className="flex flex-wrap gap-4 justify-center pt-5">
                   {offers.map((offer) => (
                     <OfferCard key={offer.id} info={offer} className="w-[380px] h-auto" />
