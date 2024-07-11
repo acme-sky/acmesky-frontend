@@ -9,6 +9,7 @@ import { UserNav } from "@/src/components/ui/user-nav";
 import { FlightCard } from "@/src/components/ui/flight_card";
 import Link from "next/link";
 import { GlareCard } from "@/src/components/ui/glare-card";
+import Swal from "sweetalert2";
 
 const apiUrl = process.env.NEXT_PUBLIC_ACMESKY_API_HOST;
 
@@ -47,7 +48,28 @@ const OfferPage = () => {
 
   const handleGlareCardClick = () => {
     if (!offer?.payment_paid) {
-      window.location.href = offer?.payment_link || "";
+      let timerInterval: string | number | NodeJS.Timeout | undefined;
+      Swal.fire({
+        title: "Redirect alert!",
+        html: "You will be redirected to a payment link in <b></b> milliseconds.",
+        timer: 2500,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+          const timer = Swal.getPopup().querySelector("b");
+          timerInterval = setInterval(() => {
+            timer.textContent = `${Swal.getTimerLeft()}`;
+          }, 100);
+        },
+        willClose: () => {
+          clearInterval(timerInterval);
+        }
+      }).then((result) => {
+        /* Read more about handling dismissals below */
+        if (result.dismiss === Swal.DismissReason.timer) {
+          window.location.href = offer?.payment_link || "";
+        }
+      });
     }
   };
 
