@@ -56,7 +56,7 @@ export function JourneyCard({
           )}
           <div>
             <p className="text-sm font-medium leading-none">Total Cost</p>
-            <p className="text-sm">${info.cost}</p>
+            <p className="text-sm">{info.cost}€</p>
           </div>
         </CardContent>
         <CardFooter className="grid gap-4">

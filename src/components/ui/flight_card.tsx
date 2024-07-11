@@ -43,7 +43,7 @@ export function FlightCard({ info, className, ...props }: FlightCardProps) {
           </div>
           <div className="col-span-2">
             <p className="text-sm font-bold">Cost</p>
-            <p className="text-sm">${info.cost}</p>
+            <p className="text-sm">{info.cost}€</p>
           </div>
         </div>
       </CardContent>
