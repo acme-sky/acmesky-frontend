@@ -1,9 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, FieldValues } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
-import { Calendar as CalendarIcon } from "lucide-react";
 import { Button } from "./button";
 import {
   Form,
@@ -13,17 +12,13 @@ import {
   FormLabel,
   FormMessage,
 } from "./form";
-import { Calendar, DateRange } from "./calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "./popover";
 import { cn } from "../../lib/utils";
-import { addDays, format } from "date-fns";
+import { addDays, startOfDay, endOfDay, format } from "date-fns";
 import axios from "axios";
 import { AirportCombobox } from "./airports_combobox";
 import Swal from "sweetalert2";
+import { DateRange } from "react-day-picker";
+import { DatePickerWithRange } from "./date-range2";
 
 const formSchema = z.object({
   flight1dep: z.string().min(3, "Outward Flight Departure is required"),
@@ -32,7 +27,7 @@ const formSchema = z.object({
   flight2arr: z.string().optional(),
   date_range: z.object({
     from: z.date(),
-    to: z.date()
+    to: z.date().optional()
   })
 }).refine(data => {
   const flight2depFilled = !!data.flight2dep;
@@ -40,16 +35,10 @@ const formSchema = z.object({
   return (flight2depFilled && flight2arrFilled) || (!flight2depFilled && !flight2arrFilled);
 }, {
   message: "Both Return Flight Departure and Arrival must be provided or neither",
-  path: ["flight2dep", "flight2arr"] // This will show the error on both fields
+  path: ["flight2dep", "flight2arr"]
 });
 
 export function InterestForm() {
-  // Define your form.
-  const [date, setDate] = useState<DateRange | undefined>({
-    from: new Date(2024, 9, 20),
-    to: addDays(new Date(2024, 9, 20), 14),
-  });
-
   const [token, setToken] = useState<string | null>(null);
   const apiUrl = process.env.NEXT_PUBLIC_ACMESKY_API_HOST;
 
@@ -63,30 +52,35 @@ export function InterestForm() {
     defaultValues: {
       flight1dep: "",
       flight1arr: "",
+      flight2dep: "",
+      flight2arr: "",
       date_range: {
-        from: new Date(2024, 9, 20),
-        to: addDays(new Date(2024, 9, 20), 5),
+        from: startOfDay(new Date(2024, 9, 20)),
+        to: startOfDay(addDays(new Date(2024, 9, 20), 5)),
       }
     }
   });
 
-  // Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      let payload: any = {
-        flight1_departure_airport: values.flight1dep,
-        flight1_departure_time: values.date_range.from.toISOString(),
-        flight1_arrival_airport: values.flight1arr,
-        flight1_arrival_time: values.date_range.to.toISOString(),
+      const formatDate = (date: Date) => {
+        return format(date, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
       };
   
-      if (values.flight2dep && values.flight2arr) {
+      let payload: any = {
+        flight1_departure_airport: values.flight1dep,
+        flight1_departure_time: formatDate(values.date_range.from),
+        flight1_arrival_airport: values.flight1arr,
+        flight1_arrival_time: formatDate(values.date_range.from),
+      };
+  
+      if (values.flight2dep && values.flight2arr && values.date_range.to) {
         payload = {
           ...payload,
           flight2_departure_airport: values.flight2dep,
-          flight2_departure_time: values.date_range.from.toISOString(),
+          flight2_departure_time: formatDate(values.date_range.to),
           flight2_arrival_airport: values.flight2arr,
-          flight2_arrival_time: values.date_range.to.toISOString(),
+          flight2_arrival_time: formatDate(values.date_range.to),
         };
       }
   
@@ -113,13 +107,9 @@ export function InterestForm() {
         flight2dep: "",
         flight2arr: "",
         date_range: {
-          from: new Date(2024, 9, 20),
-          to: addDays(new Date(2024, 9, 20), 5),
+          from: startOfDay(new Date(2024, 9, 20)),
+          to: startOfDay(addDays(new Date(2024, 9, 20), 5)),
         }
-      });
-      setDate({
-        from: new Date(2024, 9, 20),
-        to: addDays(new Date(2024, 9, 20), 5),
       });
     } catch (error) {
       Swal.fire({
@@ -186,51 +176,23 @@ export function InterestForm() {
             </FormItem>
           )}
         />
-        <FormField
+        <Controller
           control={form.control}
           name="date_range"
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>Pick Days</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    id="date"
-                    variant={"outline"}
-                    className={cn(
-                      "w-[300px] justify-start text-left font-normal",
-                      !date && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {date?.from ? (
-                      date.to ? (
-                        <>
-                          {format(date.from, "LLL dd, y")} -{" "}
-                          {format(date.to, "LLL dd, y")}
-                        </>
-                      ) : (
-                        format(date.from, "LLL dd, y")
-                      )
-                    ) : (
-                      <span>Pick a date</span>
-                    )}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    initialFocus
-                    mode="range"
-                    defaultMonth={date?.from}
-                    selected={date}
-                    onSelect={(range) => {
-                      setDate(range);
-                      field.onChange(range);
-                    }}
-                    numberOfMonths={2}
-                  />
-                </PopoverContent>
-              </Popover>
+              <DatePickerWithRange
+                date={field.value}
+                setDate={(newDate: DateRange | undefined) => {
+                  if (newDate?.from) {
+                    field.onChange({
+                      from: newDate.from,
+                      to: newDate.to || undefined
+                    });
+                  }
+                }}
+              />
               <FormMessage />
             </FormItem>
           )}
