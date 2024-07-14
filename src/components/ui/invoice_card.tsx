@@ -78,7 +78,7 @@ export function InvoiceCard({
           )}*/}
           <div>
             <p className="text-sm font-medium leading-none">Total Invoice Cost</p>
-            <p className="text-sm">${info.journey.cost}</p>
+            <p className="text-sm">{info.journey.cost}€</p>
           </div>
         </CardContent>
         <CardFooter className="grid gap-4">

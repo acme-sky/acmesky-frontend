@@ -14,7 +14,7 @@ import Swal from "sweetalert2";
 const apiUrl = process.env.NEXT_PUBLIC_ACMESKY_API_HOST;
 
 const formatDateTime = (timestamp: number) => {
-  let formattedDate = new Date(timestamp).toLocaleString("it-IT");
+  let formattedDate = new Date(timestamp+1000).toLocaleString("it-IT");
   return formattedDate;
 };
 
