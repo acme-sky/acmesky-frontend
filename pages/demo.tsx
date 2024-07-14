@@ -10,7 +10,7 @@ import { Input } from "@/src/components/ui/input";
 
 export default function DemoPage() {
   const [token, setToken] = useState("");
-  const [flightId, setFlightId] = useState("");
+  const [flightId, setFlightId] = useState<number | "">(""); // Allow empty string for initial state
   const apiUrl = process.env.NEXT_PUBLIC_AIRLINE_API_HOST;
 
   const handleApiCall = async () => {
@@ -49,10 +49,10 @@ export default function DemoPage() {
           className="w-96"
         />
         <Input
-          type="text"
+          type="number"
           placeholder="Enter flight ID"
           value={flightId}
-          onChange={(e) => setFlightId(e.target.value)}
+          onChange={(e) => setFlightId(e.target.value ? parseInt(e.target.value) : "")}
           className="w-96"
         />
         <Button onClick={handleApiCall}>Make API Call</Button>
