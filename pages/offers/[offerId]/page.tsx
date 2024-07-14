@@ -56,9 +56,9 @@ const OfferPage = () => {
         timerProgressBar: true,
         didOpen: () => {
           Swal.showLoading();
-          const timer = Swal.getPopup().querySelector("b");
+          const timer = Swal.getPopup()!.querySelector("b");
           timerInterval = setInterval(() => {
-            timer.textContent = `${Swal.getTimerLeft()}`;
+            timer!.textContent = `${Swal.getTimerLeft()}`;
           }, 100);
         },
         willClose: () => {
@@ -122,10 +122,10 @@ const OfferPage = () => {
           {!loading && !error && offer && (
             <>
               {offer.payment_paid ? (
-                <p className="text-gray-500 text-center">Offer is already paid, check your <a className="font-bold underline" href="/invoices">invoices</a></p>              
+                <p className="text-gray-500 text-center">Offer is already paid, check your <Link className="font-bold underline" href="/invoices">invoices</Link></p>              
               ) : (
                 <Link href={offer.payment_link} passHref>
-                  <GlareCard className="flex flex-col items-center justify-center" onClick={handleGlareCardClick}>
+                  <GlareCard className="flex flex-col items-center justify-center">
                     <svg
                       width="66"
                       height="65"

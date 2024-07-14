@@ -1,27 +1,13 @@
 import { Metadata } from "next"
-import Image from "next/image"
 
-import { Button } from "../src/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../src/components/ui/card"
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "../src/components/ui/tabs"
-import { CalendarDateRangePicker } from "../src/components/ui/date-range-picker"
 import { MainNav } from "../src/components/ui/main-nav"
-import { Overview } from "../src/components/ui/overview"
-import { RecentSales } from "../src/components/ui/recent-sales"
-import { Search } from "../src/components/ui/search"
 import { UserNav } from "../src/components/ui/user-nav"
-import { SavedInterest } from "@/src/components/ui/saved_interests"
 import { HoverEffect } from "@/src/components/ui/card-hover"
 import UserCard from "@/src/components/ui/user_card"
 

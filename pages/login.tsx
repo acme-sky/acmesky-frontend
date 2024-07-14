@@ -100,7 +100,7 @@ export function SignupFormDemo() {
           <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
         </form>
         <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300 pb-2">
-          Don't have an account? Sign up now
+          Don&apost have an account? Sign up now
         </p>
         <Link href="/signup">
         <button 
