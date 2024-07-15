@@ -60,9 +60,9 @@ export function JourneyCard({
           </div>
         </CardContent>
         <CardFooter className="grid gap-4">
-          <Button>
+          {/*<Button>
             <CheckIcon className="mr-2 h-4 w-4" /> Go to offer
-          </Button>
+          </Button>*/}
           <Sheet>
             <SheetTrigger asChild>
               <Button>
